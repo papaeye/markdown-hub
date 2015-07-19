@@ -1,0 +1,9 @@
+.bowerrc
+.dockerignore
+.git
+.gitignore
+.jscsrc
+.jshintrc
+bower.json
+Dockerfile
+public/bower_components

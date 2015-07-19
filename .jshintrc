@@ -1,0 +1,11 @@
+{
+  "eqeqeq": true,
+  "latedef": true,
+  "noarg": true,
+  "nonbsp": true,
+  "shadow": "outer",
+  "undef": true,
+  "unused": true,
+  "lastsemic": true,
+  "strict": true
+}
