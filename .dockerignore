@@ -6,4 +6,5 @@
 .jshintrc
 bower.json
 Dockerfile
-public/bower_components
+public/bower_components/
+public/images/emoji/
