@@ -1,6 +1,6 @@
-require 'github/markdown'
 require 'sinatra'
 require 'sinatra-websocket'
+require './helpers'
 
 set :server, 'thin'
 set :sockets, []
@@ -20,16 +20,19 @@ get '/' do
   end
 end
 
+pipeline = HTML::Pipeline.new [
+  HTML::Pipeline::MarkdownFilter,
+  HTML::Pipeline::SanitizationFilter,
+  HTML::Pipeline::EmojiFilter,
+  MarkdownHub::SyntaxHighlightFilter
+], {:asset_root => '/images'}
+
 get %r{\A\/(plain|gfm)\z} do |renderer|
   request.websocket do |ws|
     ws.onmessage do |msg|
-      if renderer == 'gfm'
-        html = GitHub::Markdown.render_gfm(msg)
-      else
-        html = GitHub::Markdown.render(msg)
-      end
+      result = pipeline.call(msg, :gfm => renderer == 'gfm')
       EM.next_tick do
-        settings.sockets.each{|s| s.send(html) }
+        settings.sockets.each{|s| s.send(result[:output].to_s) }
       end
     end
   end
