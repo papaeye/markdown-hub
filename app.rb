@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra-websocket'
+require 'task_list/filter'
 require './helpers'
 
 set :server, 'thin'
@@ -24,6 +25,7 @@ pipeline = HTML::Pipeline.new [
   HTML::Pipeline::MarkdownFilter,
   HTML::Pipeline::SanitizationFilter,
   HTML::Pipeline::EmojiFilter,
+  TaskList::Filter,
   MarkdownHub::SyntaxHighlightFilter
 ], {:asset_root => '/images'}
 

@@ -8,3 +8,5 @@ gem "github-markdown"
 gem "gemoji"
 gem "pygments.rb"
 gem "sanitize"
+
+gem "task_list"
